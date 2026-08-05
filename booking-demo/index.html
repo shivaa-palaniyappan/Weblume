@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Orris House — treatments for face, body and mood. Book a little time back for yourself.">
+  <title>Orris House — Face, body & mood</title>
+  <style>
+    :root {
+      --paper: #f7f4ed;
+      --white: #fffdf8;
+      --ink: #273b39;
+      --soft: #697976;
+      --forest: #466460;
+      --forest-deep: #2d4c49;
+      --blush: #e9c6b6;
+      --clay: #ba7561;
+      --gold: #c5aa6b;
+      --sage: #cfd8bd;
+      --line: rgba(39, 59, 57, .16);
+      --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; color: var(--ink); background: var(--paper); font-family: var(--sans); }
+    a { color: inherit; }
+    button, input { font: inherit; }
+    .wrap { width: min(1180px, calc(100% - 48px)); margin: 0 auto; }
+
+    /* Header and hero */
+    .header { position: fixed; z-index: 20; top: 0; left: 0; width: 100%; transition: background .25s ease, box-shadow .25s ease; }
+    .header.scrolled { background: rgba(255,253,248,.88); box-shadow: 0 1px 0 var(--line); backdrop-filter: blur(12px); }
+    .nav { display: flex; min-height: 76px; align-items: center; justify-content: space-between; gap: 22px; }
+    .brand { color: var(--forest-deep); font: italic 700 26px/1 var(--serif); letter-spacing: -.07em; text-decoration: none; }
+    .brand span { color: var(--clay); }
+    .nav-links { display: flex; align-items: center; gap: 25px; font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .nav-links a { color: #50615e; text-decoration: none; }
+    .nav-book, .button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 13px 18px; color: var(--white); border: 1px solid var(--forest-deep); background: var(--forest-deep); font-size: 10px; font-weight: 850; letter-spacing: .1em; text-decoration: none; text-transform: uppercase; transition: transform .2s ease, box-shadow .2s ease, background .2s ease; }
+    .nav-book:hover, .button:hover { box-shadow: 4px 4px 0 rgba(39,59,57,.16); transform: translate(-2px, -2px); }
+    .button-light { color: var(--forest-deep); border-color: var(--forest-deep); background: transparent; }
+    .button-clay { color: var(--white); border-color: var(--clay); background: var(--clay); }
+
+    .hero { position: relative; min-height: 730px; overflow: hidden; background: #dce1d7; }
+    .hero-grid { display: grid; min-height: 730px; grid-template-columns: .88fr 1.12fr; }
+    .hero-copy { display: flex; align-items: flex-end; padding: 139px clamp(26px, 5vw, 78px) 75px max(24px, calc((100vw - 1180px) / 2)); background: #e7dfd1; }
+    .hero-copy-inner { max-width: 530px; }
+    .eyebrow { display: flex; align-items: center; gap: 9px; margin-bottom: 20px; color: var(--clay); font-size: 10px; font-weight: 850; letter-spacing: .17em; text-transform: uppercase; }
+    .eyebrow::before { width: 22px; height: 1px; background: currentColor; content: ""; }
+    h1 { margin: 0; font: 400 clamp(62px, 8vw, 112px)/.82 var(--serif); letter-spacing: -.085em; }
+    h1 em { display: block; color: var(--forest); font-style: italic; }
+    .hero-copy p { max-width: 430px; margin: 28px 0 29px; color: var(--soft); font-size: 15px; line-height: 1.75; }
+    .hero-image { position: relative; overflow: hidden; background: linear-gradient(90deg, rgba(57,68,52,.08), transparent), url("https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1900&q=87") center/cover; }
+    .hero-image::after { position: absolute; right: 0; bottom: 0; width: 51%; height: 34%; background: linear-gradient(135deg, transparent 49%, var(--paper) 50%); content: ""; }
+    .hero-seal { position: absolute; z-index: 1; right: 32px; bottom: 34px; display: grid; width: 104px; aspect-ratio: 1; place-items: center; border: 1px solid var(--forest); border-radius: 50%; color: var(--forest-deep); background: rgba(247,244,237,.81); font: italic 14px/1.1 var(--serif); text-align: center; transform: rotate(-12deg); }
+    .hero-seal::before { position: absolute; inset: 7px; border: 1px solid rgba(70,100,96,.38); border-radius: inherit; content: ""; }
+    .hero-side-label { position: absolute; top: 50%; right: 17px; color: rgba(255,255,255,.87); font-size: 9px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; transform: rotate(90deg) translateX(50%); transform-origin: right; }
+
+    .trust-strip { border-bottom: 1px solid var(--line); background: var(--white); }
+    .trust-inner { display: flex; min-height: 107px; align-items: center; justify-content: space-between; gap: 25px; }
+    .trust-title { max-width: 168px; color: var(--soft); font-size: 11px; font-weight: 750; line-height: 1.5; }
+    .trust-items { display: flex; flex-wrap: wrap; gap: 27px; color: var(--forest); font: italic 22px var(--serif); letter-spacing: -.05em; }
+    .trust-items span::before { margin-right: 8px; color: var(--gold); content: "✦"; font-family: var(--sans); font-size: 10px; }
+
+    /* Shared */
+    section { position: relative; }
+    .section { padding: 116px 0; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 45px; margin-bottom: 47px; }
+    .section-title { max-width: 630px; margin: 0; font: 400 clamp(45px, 5.4vw, 75px)/.92 var(--serif); letter-spacing: -.07em; }
+    .section-title em { color: var(--forest); font-style: italic; }
+    .section-intro { max-width: 370px; margin: 0; color: var(--soft); font-size: 14px; line-height: 1.75; }
+    .reveal { opacity: 0; transform: translateY(27px); transition: opacity .7s ease, transform .7s cubic-bezier(.16,1,.3,1); }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* Treatment cards */
+    .treatments { background: var(--white); }
+    .treatment-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+    .treatment { position: relative; min-height: 322px; overflow: hidden; padding: 26px; color: var(--white); background: #71827a; }
+    .treatment::before { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(33,45,40,.76), rgba(33,45,40,.06) 72%); content: ""; }
+    .treatment:nth-child(1) { background: url("https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=900&q=84") center/cover; }
+    .treatment:nth-child(2) { background: url("https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?auto=format&fit=crop&w=900&q=84") center/cover; }
+    .treatment:nth-child(3) { background: url("https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=900&q=84") center/cover; }
+    .treatment-content { position: absolute; right: 25px; bottom: 24px; left: 25px; }
+    .treatment small { color: #f0d99d; font-size: 9px; font-weight: 850; letter-spacing: .15em; text-transform: uppercase; }
+    .treatment h3 { margin: 8px 0 8px; font: 400 32px/.92 var(--serif); letter-spacing: -.055em; }
+    .treatment p { margin: 0; color: rgba(255,255,255,.77); font-size: 12px; line-height: 1.6; }
+    .treatment a { display: inline-block; margin-top: 14px; color: #f0d99d; font-size: 10px; font-weight: 850; letter-spacing: .1em; text-decoration: none; text-transform: uppercase; }
+
+    /* Booking flow */
+    .booking { padding: 116px 0; background: #dfe5d8; }
+    .booking-shell { display: grid; grid-template-columns: 1.1fr .9fr; overflow: hidden; border: 1px solid rgba(70,100,96,.22); background: var(--white); box-shadow: 10px 10px 0 rgba(70,100,96,.13); }
+    .booking-main { padding: clamp(27px, 5vw, 58px); }
+    .booking-kicker { color: var(--clay); font-size: 10px; font-weight: 850; letter-spacing: .15em; text-transform: uppercase; }
+    .booking-main h2 { margin: 10px 0 25px; font: 400 clamp(39px, 4vw, 58px)/.94 var(--serif); letter-spacing: -.07em; }
+    .booking-step { margin-top: 27px; padding-top: 23px; border-top: 1px solid var(--line); }
+    .step-head { display: flex; align-items: baseline; gap: 11px; margin-bottom: 14px; }
+    .step-no { color: var(--clay); font-size: 10px; font-weight: 850; letter-spacing: .1em; }
+    .step-head h3 { margin: 0; font-size: 14px; letter-spacing: -.02em; }
+    .option-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+    .option { padding: 14px; color: var(--ink); border: 1px solid var(--line); background: var(--paper); cursor: pointer; text-align: left; transition: border .2s ease, background .2s ease, transform .2s ease; }
+    .option:hover, .option.selected { border-color: var(--forest); background: var(--sage); transform: translateY(-2px); }
+    .option b { display: block; font: 400 20px/1 var(--serif); letter-spacing: -.045em; }
+    .option span { display: block; margin-top: 5px; color: var(--soft); font-size: 10px; line-height: 1.4; }
+    .practitioners { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; }
+    .practitioner { padding: 10px; color: var(--ink); border: 1px solid var(--line); background: var(--white); cursor: pointer; text-align: center; transition: border .2s ease, background .2s ease; }
+    .practitioner.selected { border-color: var(--forest); background: #ebf0e6; }
+    .avatar { width: 42px; height: 42px; margin: 0 auto 8px; border-radius: 50%; background: #d9b4a5 center/cover; }
+    .practitioner:nth-child(2) .avatar { background-image: url("https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80"); }
+    .practitioner:nth-child(3) .avatar { background-image: url("https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80"); }
+    .practitioner:nth-child(1) .avatar { background-image: url("https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&q=80"); }
+    .practitioner b { display: block; font-size: 11px; }
+    .practitioner span { color: var(--soft); font-size: 9px; }
+    .date-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .date-option { padding: 9px 5px; color: var(--ink); border: 1px solid var(--line); background: var(--paper); cursor: pointer; text-align: center; transition: .2s ease; }
+    .date-option.selected { color: var(--white); border-color: var(--forest-deep); background: var(--forest-deep); }
+    .date-option small { display: block; font-size: 9px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+    .date-option b { display: block; margin-top: 3px; font: 400 19px var(--serif); }
+    .time-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .time-option { padding: 10px 4px; color: var(--forest-deep); border: 1px solid rgba(70,100,96,.33); background: #eef3e9; cursor: pointer; font-size: 10px; font-weight: 800; }
+    .time-option.selected { color: var(--white); border-color: var(--clay); background: var(--clay); }
+    .booking-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .input-field { display: flex; flex-direction: column; gap: 6px; }
+    .input-field label { color: var(--soft); font-size: 9px; font-weight: 850; letter-spacing: .1em; text-transform: uppercase; }
+    .input-field input { width: 100%; padding: 11px 10px; color: var(--ink); outline: 0; border: 1px solid var(--line); background: var(--paper); font-size: 12px; }
+    .booking-main .button { width: 100%; margin-top: 22px; }
+    .booking-feedback { min-height: 18px; margin: 11px 0 0; color: var(--forest); font-size: 11px; font-weight: 750; text-align: center; }
+    .booking-summary { position: relative; display: flex; min-height: 100%; flex-direction: column; justify-content: space-between; padding: clamp(27px, 4vw, 48px); color: var(--white); background: var(--forest-deep); }
+    .booking-summary::after { position: absolute; right: -80px; bottom: -130px; width: 330px; height: 330px; border: 1px solid rgba(255,255,255,.23); border-radius: 50%; content: ""; }
+    .summary-content { position: relative; z-index: 1; }
+    .summary-content small { color: #efd99b; font-size: 9px; font-weight: 850; letter-spacing: .15em; text-transform: uppercase; }
+    .summary-content h3 { margin: 12px 0 30px; font: 400 42px/.9 var(--serif); letter-spacing: -.06em; }
+    .summary-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid rgba(255,255,255,.22); }
+    .summary-list li { display: flex; justify-content: space-between; gap: 15px; padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,.22); color: rgba(255,255,255,.68); font-size: 11px; }
+    .summary-list b { color: var(--white); font-size: 12px; text-align: right; }
+    .summary-note { position: relative; z-index: 1; padding-top: 19px; color: rgba(255,255,255,.69); border-top: 1px solid rgba(255,255,255,.22); font-size: 11px; line-height: 1.65; }
+    .summary-note b { display: block; margin-bottom: 5px; color: var(--lime, #e1e9ad); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+
+    /* Story and specialists */
+    .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7vw; align-items: center; }
+    .story-image { position: relative; min-height: 530px; overflow: hidden; background: url("https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1200&q=85") center/cover; }
+    .story-image::after { position: absolute; right: 25px; bottom: 24px; width: 95px; height: 95px; border: 1px solid rgba(255,255,255,.8); border-radius: 50%; content: ""; }
+    .story-copy h2 { margin: 0; font: 400 clamp(45px, 5vw, 69px)/.92 var(--serif); letter-spacing: -.07em; }
+    .story-copy h2 em { color: var(--clay); font-style: italic; }
+    .story-copy p { max-width: 450px; margin: 23px 0 0; color: var(--soft); font-size: 14px; line-height: 1.8; }
+    .values { display: grid; gap: 0; margin-top: 30px; }
+    .value { display: grid; grid-template-columns: 42px 1fr; gap: 15px; padding: 16px 0; border-top: 1px solid var(--line); }
+    .value:last-child { border-bottom: 1px solid var(--line); }
+    .value span { color: var(--clay); font-size: 11px; font-weight: 850; }
+    .value b { display: block; margin-bottom: 4px; font: 400 19px var(--serif); letter-spacing: -.04em; }
+    .value p { margin: 0; font-size: 12px; }
+    .specialists { padding: 110px 0; background: #e8ddd2; }
+    .specialist-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .specialist { min-height: 278px; padding: 25px; border: 1px solid rgba(39,59,57,.15); background: rgba(255,253,248,.62); }
+    .specialist .number { color: var(--clay); font-size: 10px; font-weight: 850; letter-spacing: .13em; }
+    .specialist h3 { margin: 64px 0 10px; font: 400 28px/.93 var(--serif); letter-spacing: -.055em; }
+    .specialist p { margin: 0; color: var(--soft); font-size: 12px; line-height: 1.65; }
+
+    /* Membership / testimonials */
+    .membership-grid { display: grid; grid-template-columns: .95fr 1.05fr; gap: 16px; }
+    .membership-card { padding: clamp(30px, 5vw, 59px); color: var(--white); background: #7b8c78; }
+    .membership-card h2 { max-width: 440px; margin: 0; font: 400 clamp(45px, 5vw, 70px)/.9 var(--serif); letter-spacing: -.07em; }
+    .membership-card h2 em { color: #f1dda2; font-style: italic; }
+    .membership-card p { max-width: 410px; margin: 22px 0 26px; color: rgba(255,255,255,.72); font-size: 13px; line-height: 1.75; }
+    .membership-card .button { color: var(--forest-deep); border-color: #f1dda2; background: #f1dda2; }
+    .testimonial { display: flex; min-height: 100%; flex-direction: column; justify-content: space-between; padding: clamp(30px, 5vw, 59px); background: var(--white); }
+    .testimonial blockquote { max-width: 460px; margin: 0; font: 400 clamp(31px, 3.3vw, 48px)/.98 var(--serif); letter-spacing: -.06em; }
+    .testimonial blockquote em { color: var(--forest); font-style: italic; }
+    .testimonial cite { margin-top: 30px; color: var(--soft); font-size: 11px; font-style: normal; line-height: 1.6; }
+    .testimonial cite b { display: block; color: var(--clay); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+
+    /* Visit */
+    .visit { padding: 0 0 58px; }
+    .visit-shell { display: grid; grid-template-columns: .98fr 1.02fr; min-height: 485px; overflow: hidden; color: var(--white); background: var(--forest-deep); }
+    .visit-copy { display: flex; align-items: center; padding: clamp(32px, 6vw, 75px); }
+    .visit-copy h2 { margin: 0; font: 400 clamp(49px, 6vw, 79px)/.85 var(--serif); letter-spacing: -.08em; }
+    .visit-copy h2 em { display: block; color: #f0d99d; font-style: italic; }
+    .visit-copy p { max-width: 380px; margin: 21px 0 26px; color: rgba(255,255,255,.72); font-size: 13px; line-height: 1.75; }
+    .visit-details { display: flex; gap: 31px; margin-top: 25px; color: rgba(255,255,255,.75); font-size: 11px; line-height: 1.6; }
+    .visit-details b { display: block; color: #f0d99d; font-size: 9px; letter-spacing: .12em; text-transform: uppercase; }
+    .visit-map iframe { display: block; width: 100%; min-height: 485px; height: 100%; border: 0; filter: grayscale(.48) sepia(.13) contrast(.92); }
+    footer { padding: 30px 0 40px; border-top: 1px solid var(--line); color: var(--soft); font-size: 10px; font-weight: 750; letter-spacing: .09em; text-transform: uppercase; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 15px; }
+
+    @media (max-width: 880px) {
+      .hero-grid, .booking-shell, .story-grid, .membership-grid, .visit-shell { grid-template-columns: 1fr; }
+      .hero { min-height: auto; }
+      .hero-grid { min-height: 820px; }
+      .hero-copy { min-height: 700px; padding-left: 48px; }
+      .hero-image { min-height: 420px; }
+      .hero-image::after { display: none; }
+      .hero-seal { right: 28px; bottom: 28px; }
+      .booking-summary { min-height: 370px; }
+      .treatment-grid, .specialist-grid { grid-template-columns: 1fr; max-width: 520px; margin: auto; }
+      .trust-inner { padding: 25px 0; display: block; }
+      .trust-items { margin-top: 17px; }
+      .visit-map iframe { min-height: 360px; }
+    }
+    @media (max-width: 600px) {
+      .wrap { width: min(100% - 32px, 1180px); }
+      .nav { min-height: 65px; }
+      .nav-links { display: none; }
+      .nav-book { padding: 10px 12px; font-size: 9px; }
+      .hero-grid { min-height: 670px; }
+      .hero-copy { min-height: 670px; padding: 105px 24px 45px; }
+      h1 { font-size: clamp(61px, 17vw, 92px); }
+      .hero-image { min-height: 310px; }
+      .hero-side-label, .hero-seal { display: none; }
+      .section, .booking, .specialists { padding: 77px 0; }
+      .section-head { display: block; margin-bottom: 34px; }
+      .section-intro { margin-top: 16px; }
+      .treatment { min-height: 280px; }
+      .booking-main, .booking-summary { padding: 27px 21px; }
+      .option-grid, .booking-inputs { grid-template-columns: 1fr; }
+      .practitioners { grid-template-columns: 1fr 1fr 1fr; }
+      .date-row, .time-grid { grid-template-columns: repeat(2, 1fr); }
+      .story-image { min-height: 390px; }
+      .membership-card, .testimonial { padding: 33px 27px; }
+      .visit { padding-bottom: 35px; }
+      .visit-copy { padding: 43px 27px; }
+      .footer-inner { flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <header class="header" id="top"><div class="wrap nav"><a class="brand" href="#top">Orris <span>House</span></a><nav class="nav-links" aria-label="Primary navigation"><a href="#treatments">Treatments</a><a href="#booking">Book</a><a href="#house">Our house</a><a href="#visit">Visit</a></nav><a class="nav-book" href="#booking">Make a booking</a></div></header>
+  <main>
+    <section class="hero"><div class="hero-grid"><div class="hero-copy"><div class="hero-copy-inner reveal"><div class="eyebrow">Face, body & mood</div><h1>Time, given <em>back to you.</em></h1><p>Orris House is a modern treatment space for the rituals that help you feel more like yourself. Come in, soften the edges, and leave with a little more lightness.</p><a class="button button-clay" href="#booking">Book your ritual <span>→</span></a></div></div><div class="hero-image"><div class="hero-side-label">A calmer kind of care</div><div class="hero-seal">Everyday<br>rituals</div></div></div></section>
+    <div class="trust-strip"><div class="wrap trust-inner"><div class="trust-title">Considered care, from booking to afterglow.</div><div class="trust-items"><span>Quietly expert</span><span>Carefully personal</span><span>Effortlessly bookable</span></div></div></div>
+
+    <section class="section treatments" id="treatments"><div class="wrap"><div class="section-head reveal"><div><div class="eyebrow">A ritual for your day</div><h2 class="section-title">Treatments that meet you <em>where you are.</em></h2></div><p class="section-intro">Choose a pause, a reset, or a little more glow. Each treatment begins with a thoughtful conversation, never a one-size-fits-all plan.</p></div><div class="treatment-grid"><article class="treatment reveal"><div class="treatment-content"><small>Face</small><h3>The Reset Facial</h3><p>A deeply replenishing 60-minute facial, tailored to what your skin needs now.</p><a href="#booking">Book a facial →</a></div></article><article class="treatment reveal"><div class="treatment-content"><small>Body</small><h3>Restorative Massage</h3><p>A slow, grounding massage to release held tension and bring you back to centre.</p><a href="#booking">Book a massage →</a></div></article><article class="treatment reveal"><div class="treatment-content"><small>Ritual</small><h3>Head to Toe</h3><p>Two quiet hours of facial, bodywork, and a carefully held exhale.</p><a href="#booking">Book the ritual →</a></div></article></div></div></section>
+
+    <section class="booking" id="booking"><div class="wrap"><div class="booking-shell reveal"><div class="booking-main"><div class="booking-kicker">Your appointment</div><h2>Make time for yourself.</h2><div class="booking-step"><div class="step-head"><span class="step-no">01</span><h3>Choose your ritual</h3></div><div class="option-grid"><button class="option selected" type="button" data-service="The Reset Facial" data-price="₹3,200" data-duration="60 minutes"><b>The Reset Facial</b><span>60 minutes · ₹3,200</span></button><button class="option" type="button" data-service="Restorative Massage" data-price="₹3,800" data-duration="75 minutes"><b>Restorative Massage</b><span>75 minutes · ₹3,800</span></button><button class="option" type="button" data-service="Head to Toe Ritual" data-price="₹6,400" data-duration="120 minutes"><b>Head to Toe Ritual</b><span>120 minutes · ₹6,400</span></button><button class="option" type="button" data-service="Personal Consultation" data-price="Complimentary" data-duration="20 minutes"><b>Personal Consultation</b><span>20 minutes · Complimentary</span></button></div></div><div class="booking-step"><div class="step-head"><span class="step-no">02</span><h3>Choose a practitioner</h3></div><div class="practitioners"><button class="practitioner selected" type="button" data-practitioner="Maya"><span class="avatar"></span><b>Maya</b><span>Skin therapist</span></button><button class="practitioner" type="button" data-practitioner="Rhea"><span class="avatar"></span><b>Rhea</b><span>Bodywork</span></button><button class="practitioner" type="button" data-practitioner="Nia"><span class="avatar"></span><b>Nia</b><span>Holistic care</span></button></div></div><div class="booking-step"><div class="step-head"><span class="step-no">03</span><h3>Pick a day & time</h3></div><div class="date-row"><button class="date-option selected" type="button" data-date="Thursday, 21 August"><small>Thu</small><b>21</b></button><button class="date-option" type="button" data-date="Friday, 22 August"><small>Fri</small><b>22</b></button><button class="date-option" type="button" data-date="Saturday, 23 August"><small>Sat</small><b>23</b></button><button class="date-option" type="button" data-date="Monday, 25 August"><small>Mon</small><b>25</b></button></div><div class="time-grid" style="margin-top:10px"><button class="time-option" type="button">10:00</button><button class="time-option" type="button">11:30</button><button class="time-option" type="button">14:00</button><button class="time-option" type="button">16:30</button></div></div><div class="booking-step"><div class="step-head"><span class="step-no">04</span><h3>A few details</h3></div><div class="booking-inputs"><div class="input-field"><label for="guestName">Your name</label><input id="guestName" type="text" placeholder="Full name"></div><div class="input-field"><label for="guestEmail">Email address</label><input id="guestEmail" type="email" placeholder="you@email.com"></div></div></div><button class="button" type="button" id="confirmBooking">Confirm appointment <span>→</span></button><p class="booking-feedback" id="bookingFeedback" aria-live="polite"></p></div><aside class="booking-summary"><div class="summary-content"><small>Your quiet hour</small><h3>Your booking<br>at a glance.</h3><ul class="summary-list"><li>Ritual <b id="summaryService">The Reset Facial</b></li><li>With <b id="summaryPractitioner">Maya</b></li><li>When <b id="summaryDate">Thursday, 21 August</b></li><li>Time <b id="summaryTime">Choose a time</b></li><li>Investment <b id="summaryPrice">₹3,200</b></li></ul></div><div class="summary-note"><b>Flexible care</b>Need to move your appointment? You can reschedule up to 24 hours beforehand, without a fuss.</div></aside></div></div></section>
+
+    <section class="section" id="house"><div class="wrap story-grid"><div class="story-image reveal"></div><div class="story-copy reveal"><div class="eyebrow">The Orris approach</div><h2>Care without the <em>performance.</em></h2><p>We believe good care starts with being heard. That is why appointments are unhurried, recommendations are honest, and every detail is designed to make you feel held—not hurried.</p><div class="values"><div class="value"><span>01</span><div><b>Listen first</b><p>Every appointment begins with a real conversation about your day, your skin, and what would feel good.</p></div></div><div class="value"><span>02</span><div><b>Keep it considered</b><p>Thoughtful techniques and carefully selected products, without unnecessary complication.</p></div></div><div class="value"><span>03</span><div><b>Make it yours</b><p>There is no prescribed version of self-care. We shape the experience around you.</p></div></div></div></div></div></section>
+
+    <section class="specialists"><div class="wrap"><div class="section-head reveal"><div><div class="eyebrow">Why clients return</div><h2 class="section-title">The details do <em>the talking.</em></h2></div><p class="section-intro">The parts you do not have to think about are often the parts that stay with you.</p></div><div class="specialist-grid"><article class="specialist reveal"><div class="number">01 / EASY</div><h3>Booking that feels simple.</h3><p>Clear treatments, real availability, thoughtful reminders, and an easy route to reschedule.</p></article><article class="specialist reveal"><div class="number">02 / PERSONAL</div><h3>A familiar face, every time.</h3><p>Choose your practitioner and keep your preferences in one considered place.</p></article><article class="specialist reveal"><div class="number">03 / USEFUL</div><h3>Care that continues.</h3><p>Aftercare notes, seasonal rituals, and memberships that make regular care feel possible.</p></article></div></div></section>
+
+    <section class="section"><div class="wrap membership-grid"><article class="membership-card reveal"><div class="eyebrow" style="color:#f1dda2">For the regulars</div><h2>A small ritual, <em>more often.</em></h2><p>Join the house and make time for your wellbeing each month. Members receive preferred availability, a little more value, and the kind of reminders that actually help.</p><a class="button" href="#booking">Explore membership <span>→</span></a></article><article class="testimonial reveal"><blockquote>“It is not just the treatment. It is the feeling of being <em>looked after</em> before you even walk through the door.”</blockquote><cite><b>Meera S. · Orris member</b>Monthly facial ritual · Member since 2024</cite></article></div></section>
+
+    <section class="visit" id="visit"><div class="wrap"><div class="visit-shell"><div class="visit-copy"><div><div class="eyebrow" style="color:#f0d99d">Come in</div><h2>Find your <em>quiet corner.</em></h2><p>Step off the busy street and into a slower room. We are tucked just behind the high street, with fresh tea waiting after every ritual.</p><a class="button button-clay" href="mailto:hello@orrishouse.example?subject=Appointment%20enquiry">Get in touch <span>→</span></a><div class="visit-details"><div><b>Hours</b>Tue–Sun<br>10am–7pm</div><div><b>Find us</b>24 Willow Lane<br>Your neighbourhood</div></div></div></div><div class="visit-map"><iframe title="Demo map showing the Orris House location" src="https://www.google.com/maps?q=Indiranagar%2C%20Bengaluru&output=embed" loading="lazy"></iframe></div></div></div></section>
+  </main>
+  <footer><div class="wrap footer-inner"><span>© 2026 Orris House</span><span>Treatments for face, body & mood</span><span>Demo booking website</span></div></footer>
+  <script>
+    const booking = { service: 'The Reset Facial', price: '₹3,200', practitioner: 'Maya', date: 'Thursday, 21 August', time: '' };
+    const summary = { service: document.getElementById('summaryService'), price: document.getElementById('summaryPrice'), practitioner: document.getElementById('summaryPractitioner'), date: document.getElementById('summaryDate'), time: document.getElementById('summaryTime') };
+    const updateSummary = () => { summary.service.textContent = booking.service; summary.price.textContent = booking.price; summary.practitioner.textContent = booking.practitioner; summary.date.textContent = booking.date; summary.time.textContent = booking.time || 'Choose a time'; };
+    document.querySelectorAll('[data-service]').forEach(button => button.addEventListener('click', () => { document.querySelectorAll('[data-service]').forEach(item => item.classList.remove('selected')); button.classList.add('selected'); booking.service = button.dataset.service; booking.price = button.dataset.price; updateSummary(); }));
+    document.querySelectorAll('[data-practitioner]').forEach(button => button.addEventListener('click', () => { document.querySelectorAll('[data-practitioner]').forEach(item => item.classList.remove('selected')); button.classList.add('selected'); booking.practitioner = button.dataset.practitioner; updateSummary(); }));
+    document.querySelectorAll('[data-date]').forEach(button => button.addEventListener('click', () => { document.querySelectorAll('[data-date]').forEach(item => item.classList.remove('selected')); button.classList.add('selected'); booking.date = button.dataset.date; updateSummary(); }));
+    document.querySelectorAll('.time-option').forEach(button => button.addEventListener('click', () => { document.querySelectorAll('.time-option').forEach(item => item.classList.remove('selected')); button.classList.add('selected'); booking.time = button.textContent; updateSummary(); }));
+    document.getElementById('confirmBooking').addEventListener('click', () => { const name = document.getElementById('guestName').value.trim(); const email = document.getElementById('guestEmail').value.trim(); const feedback = document.getElementById('bookingFeedback'); if (!booking.time) { feedback.textContent = 'Choose a time to continue.'; return; } if (!name || !email) { feedback.textContent = 'Add your name and email to continue.'; return; } feedback.textContent = `Thank you, ${name}. Your ${booking.service.toLowerCase()} request is reserved for ${booking.date} at ${booking.time}.`; });
+    const observer = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } }), { threshold: .1 }); document.querySelectorAll('.reveal').forEach(element => observer.observe(element));
+    const header = document.querySelector('.header'); addEventListener('scroll', () => header.classList.toggle('scrolled', scrollY > 25), { passive: true });
+  </script>
+</body>
+</html>
